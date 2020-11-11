@@ -1,0 +1,21 @@
+#!/usr/bin/python
+import datetime
+import os
+import os.path
+import shutil
+
+JOURNAL_DIR = os.path.join(os.path.expanduser('~'), 'Dropbox', 'journal')
+
+TEMPLATE_FILE = os.path.join(JOURNAL_DIR, '_template.rst')
+
+def open_journal(journal_dir, template_file):
+    today = datetime.datetime.now()
+    date = today.strftime('%Y-%m-%d')
+    filename = os.path.join(journal_dir, "{}.rst".format(date))
+
+    if not os.path.exists(filename) and os.path.exists(TEMPLATE_FILE):
+        shutil.copyfile(template_file, filename)
+    os.system("vim {}".format(filename))
+
+if __name__ == '__main__':
+    open_journal(JOURNAL_DIR, TEMPLATE_FILE)
